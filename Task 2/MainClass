@@ -1,0 +1,30 @@
+package student;
+
+public class MainClass {
+	    public static void main(String[] args) {
+	        System.out.println("=== Student Exam Score Logger ===\n");
+	        String filePath = "scores.csv";
+	        ScoreLogger logger = new ScoreLogger(filePath);
+
+	        Thread student1 = new StudentThread(logger, "Diya", 1 , 95);
+	        Thread student2 = new StudentThread(logger, "Aarav", 2 , 88);
+	        Thread student3 = new StudentThread(logger, "Meera", 3 , 92);
+
+	        // Start all threads
+	        student1.start();
+	        student2.start();
+	        student3.start();
+
+	        // Wait for all threads to complete
+	        try {
+	            student1.join();
+	            student2.join();
+	            student3.join();
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        }
+
+	        System.out.println("\nAll student scores logged successfully!!");
+	        System.out.println("Check 'scores.csv' for output.\n");
+	    }
+	}
