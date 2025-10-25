@@ -1,0 +1,39 @@
+package student;
+import static org.junit.Assert.*;
+import org.junit.Test;
+import java.io.*;
+public class ScoreLoggerTest {
+    @Test
+    public void testSingleWrite() throws IOException {
+        String filePath = "test_scores.csv";
+        ScoreLogger logger = new ScoreLogger(filePath);
+        logger.writeScore("Diya", 1, 95);
+        File file = new File(filePath);
+        assertTrue(file.exists());
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line = br.readLine();
+            assertEquals("Diya,1,95", line);
+        }
+        file.delete();
+    }
+    @Test
+    public void testMultiThreadWrite() throws InterruptedException, IOException {
+        String filePath = "test_scores_multi.csv";
+        ScoreLogger logger = new ScoreLogger(filePath);
+        Thread t1 = new StudentThread(logger, "Aarav", 2, 88);
+        Thread t2 = new StudentThread(logger, "Meera", 3, 92);
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+        File file = new File(filePath);
+        assertTrue(file.exists());
+        int lineCount = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            while (br.readLine() != null) lineCount++;
+        }
+        assertEquals(2, lineCount);
+        file.delete();
+    }
+}
