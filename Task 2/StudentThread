@@ -1,0 +1,19 @@
+package student;
+
+public class StudentThread extends Thread {
+	private final ScoreLogger logger;
+    private final String studentName;
+    private final int rollNo;
+    private final int marks;
+    public StudentThread(ScoreLogger logger, String studentName, int rollNo, int marks) {
+        this.logger = logger;
+        this.studentName = studentName;
+        this.rollNo = rollNo;
+        this.marks = marks;
+    }
+
+    @Override
+    public void run() {
+        logger.writeScore(studentName, rollNo, marks);
+    }
+}
