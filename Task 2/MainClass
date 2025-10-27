@@ -4,11 +4,11 @@ public class MainClass {
 	    public static void main(String[] args) {
 	        System.out.println("=== Student Exam Score Logger ===\n");
 	        String filePath = "scores.csv";
-	        ScoreLogger logger = new ScoreLogger(filePath);
+	        Score logger = new Score(filePath);
 
-	        Thread student1 = new StudentThread(logger, "Diya", 1 , 95);
-	        Thread student2 = new StudentThread(logger, "Aarav", 2 , 88);
-	        Thread student3 = new StudentThread(logger, "Meera", 3 , 92);
+	        Thread student1 = new StudentLogger(logger, "Diya", 1 , 95);
+	        Thread student2 = new StudentLogger(logger, "Aarav", 2 , 88);
+	        Thread student3 = new StudentLogger(logger, "Meera", 3 , 92);
 
 	        // Start all threads
 	        student1.start();
@@ -28,3 +28,5 @@ public class MainClass {
 	        System.out.println("Check 'scores.csv' for output.\n");
 	    }
 	}
+
+
